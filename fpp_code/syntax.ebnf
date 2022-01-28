@@ -1,0 +1,72 @@
+-----------------------------
+Usage	Notation
+definition	=
+concatenation	,
+termination	;
+alternation	|
+optional	[ ... ]
+repetition	{ ... }
+grouping	( ... )
+terminal string	" ... "
+terminal string	' ... '
+comment	(* ... *)
+special sequence	? ... ?
+exception	-
+------------------------------
+
+grammar = { statements }
+
+statements = [ { var_declaration
+                | var_assignment
+                | block
+                | if_statement
+                | while_statement
+                | function_statement
+                | const_declaration
+                | struct_declaration
+                | function_call } ] ;
+
+var_declaration = 'var', identifier, [ '[', [ constant_number ], ']' ],
+                                        [ '=', expression | array_list * number of elements = constant_number * ] ;
+
+var_assignment = identifier,[ '[', expression, ']' ], '=', expression
+                                |  array_list * if variable is an array *
+                                | struct_assignment * if variable is an struct * ;
+
+array_list = expression, [ { ',', expression } ] ;  * check for correctness *
+
+struct_assignment = '{', ( expression | array_list, [ { ',', expression | array_list ] )
+                                      | ('.', identifier, '=', expression, [ { ',', '.', identifier, '=', expression } ] ) ;
+
+block = '{', [ { statements } ], '}' ;
+
+if_statement = 'if', expression, block, [ else_statement | elif_statement ] ;
+
+else_statement = 'else', block ;
+
+elif_statement = 'elif', expression, block, [ elif_statement | else_statement ] ;
+
+while_statement = 'while', expression, block;
+
+function_statement = 'proc', identifier, '(' [ parameter_list ] ')',
+                                         '{', ( [ { statements } ], [ 'return', [ return_list ] ] ) ;
+
+function_call = identifier, '(', [ expression | array_list, [ { ',', expression | array_list } ], ')' ;
+
+parameter_list = identifier, [ { ',', identifier } ]
+
+return_list = expression, [ { ',', expression } ]
+
+const_declaration = 'const', '{',  { unique_identifier, '=', ( constant_number | constant_string ) } '}' ; * '+' = one or more *
+
+struct_declaration = 'struct', '{', { identifier, [ '[', constant_number, ']' ] }, '}' ;
+
+expression = * using shunting yard parsing algorithm *
+
+identifier = ... ;
+
+constant_number = ... ;
+
+constant_string = ... ;
+
+unique_identifier = ... ;

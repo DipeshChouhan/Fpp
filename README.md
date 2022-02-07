@@ -1,4 +1,4 @@
-# Fpp
+# Fpp (In development)
 A compiled programming language
 Currently only support variable declaration and assignment and blocks
 

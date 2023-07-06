@@ -1,4 +1,4 @@
-# Fpp (In development)
+# Fpp (DEAD)
 A compiled programming language
 Currently only support variable declaration and assignment and blocks
 
